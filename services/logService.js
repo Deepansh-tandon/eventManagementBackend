@@ -3,7 +3,7 @@ const { fromUtc } = require('./timezoneService');
 
 // Save a log entry when an event is updated
 const createLog = async ({ eventId, updatedByProfileId, updatedByTimezone, changes }) => {
-	console.log('💾 logService.createLog called with:', {
+	console.log(' logService.createLog called with:', {
 		eventId,
 		updatedByProfileId,
 		updatedByTimezone,
@@ -12,7 +12,7 @@ const createLog = async ({ eventId, updatedByProfileId, updatedByTimezone, chang
 	});
 
 	if (!updatedByProfileId) {
-		console.error('❌ ERROR: updatedByProfileId is required but was not provided!');
+		console.error('ERROR: updatedByProfileId is required but was not provided!');
 		throw new Error('updatedByProfileId is required for logging');
 	}
 
@@ -24,16 +24,16 @@ const createLog = async ({ eventId, updatedByProfileId, updatedByTimezone, chang
 		changes
 	});
 
-	console.log('💾 Saving log to database...');
+	console.log('Saving log to database...');
 	const savedLog = await log.save();
-	console.log('✅ Log saved successfully with ID:', savedLog._id);
+	console.log('Log saved successfully with ID:', savedLog._id);
 	
 	return savedLog;
 };
 
 // Get all the update history for an event
 const getEventLogs = async (eventId, requestTz = 'UTC') => {
-	console.log('🔍 logService.getEventLogs - Searching for logs:', {
+	console.log('logService.getEventLogs - Searching for logs:', {
 		eventId,
 		requestTz
 	});
@@ -42,10 +42,10 @@ const getEventLogs = async (eventId, requestTz = 'UTC') => {
 		.populate('updatedByProfileId', 'name')
 		.sort({ updatedAtUtc: -1 });
 
-	console.log('🔍 Found logs in database:', logs.length);
+	console.log('Found logs in database:', logs.length);
 	
 	if (logs.length > 0) {
-		console.log('📝 Sample log:', logs[0]);
+		console.log('Sample log:', logs[0]);
 	}
 
 	// Convert timestamps to the viewer's timezone
@@ -54,7 +54,7 @@ const getEventLogs = async (eventId, requestTz = 'UTC') => {
 		updatedAtLocal: fromUtc(log.updatedAtUtc, requestTz)
 	}));
 
-	console.log('✅ Returning logs:', result.length);
+	console.log('Returning logs:', result.length);
 	return result;
 };
 

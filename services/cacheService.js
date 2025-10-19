@@ -1,8 +1,8 @@
 // Simple in-memory cache using Map for super fast lookups
 class CacheService {
 	constructor() {
-		this.cache = new Map(); // Stores key -> {value, timestamp}
-		this.ttl = 5 * 60 * 1000; // Cache expires after 5 minutes
+		this.cache = new Map(); 
+		this.ttl = 5 * 60 * 1000; 
 	}
 
 	// Save something to cache
